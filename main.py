@@ -1,8 +1,3 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 class wordle():
     def __init__(self):
         file = open("words.txt", "r", encoding = "utf-8")
@@ -10,33 +5,20 @@ class wordle():
         self.lastguess = "crane"
         self.wordlist = [n.rstrip() for n in file]
 
-    #def updater(self, finaldict):#, updates where the letters are valid in the word based on the last input from the user
-
     def valuesparse(self,wordweird):
-        buffer = ""
         for i in range(5):
-            buffer += f'{self.lastguess[i]}({wordweird[i]})'
-        pos = 0
+            currentv = wordweird[i]
+            currentl = self.lastguess[i]
 
-
-
-        while buffer.find("(") != -1:
-            currentv = buffer[buffer.find("(")+1]
-            currentl = buffer[buffer.find("(")-1]
-
-            doneletters = [i for i in self.finaldict["no"]] + [i[0] for i in self.finaldict["odd"]] + [i[0] for i in self.finaldict["right"]]
+            doneletters = self.finaldict["no"] + [i[0] for i in self.finaldict["odd"]] + [i[0] for i in self.finaldict["right"]]
 
             if currentv == "n" and currentl not in doneletters:
                 self.finaldict["no"].append(currentl)
             if currentv == "o":
-                self.finaldict["odd"].append([currentl,pos])
+                self.finaldict["odd"].append([currentl,i])
             if currentv == "r":
-                self.finaldict["right"].append([currentl,pos])
+                self.finaldict["right"].append([currentl,i])
 
-            buffer = buffer[(buffer.find("(") + 1):]
-            #print(buffer)
-            pos += 1
-            #print(currentv)
         return (self.finaldict)
 
     def limiter(self,finaldict):
@@ -92,8 +74,6 @@ class wordle():
         self.wordlist = oddlimit(finaldict, rightlimit(finaldict, nolimit(finaldict,self.wordlist)))
 
     def ranker(self):
-        #dict = {*letter to probability*}
-        #letterstrength = letterprobability/num of letter added up for all
         strong = 0
         strongest = ""
 
@@ -129,6 +109,3 @@ while ask != "done":
         print(world.ranker())
     elif ask == "new":
         world = wordle()
-# Press the green button in the gutter to run the script.
-# dc1 = looking for 3 orange, dc2 = looking for 1 (maybe 2 idk) green, guessing = educated guessing
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
